@@ -4,7 +4,7 @@
   "description": "Site Code for fastfindany",
   "main": "server.js",
   "proxy": {
-      "*": "http://[::1]:8081"
+      "*": "http://localhost:8081"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -4,11 +4,20 @@ const cors = require("cors");
 
 const app = express();
 
-var corsOptions = {
-  origin: "http://localhost:8081"
+const corsOpts = {
+  origin: '*',
+
+  methods: [
+    'GET',
+    'POST',
+  ],
+
+  allowedHeaders: [
+    'Content-Type',
+  ],
 };
 
-app.use(cors(corsOptions));
+app.use(cors(corsOpts));
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json());
@@ -35,6 +44,8 @@ db.mongoose
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to fastfindany application." });
 });
+
+require("./app/routes/individual.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 80;

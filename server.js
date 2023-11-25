@@ -1,3 +1,6 @@
+// Import builtin NodeJS modules to instantiate the service
+const https = require("https");
+const fs = require("fs");
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
@@ -48,10 +51,19 @@ app.get("/", (req, res) => {
 require("./app/routes/individual.routes")(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 80;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}.`);
+const PORT = process.env.PORT || 443;
+
+https
+  .createServer(
+    {
+      key: fs.readFileSync("server.key"),
+      cert: fs.readFileSync("server.cert"),
+    },
+    app)
+  .listen(PORT, ()=>{
+    console.log(`Server is running on port ${PORT}.`);
+  });
+
+app.get('/', (req,res)=>{
+  res.send("Hello from express server.")
 });
-
-
-
